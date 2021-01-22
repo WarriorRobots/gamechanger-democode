@@ -11,16 +11,23 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.IO;
+import frc.robot.DashboardContainer;
 import frc.robot.RobotMap;
 import frc.robot.Vars;
+import frc.robot.DashboardContainer.TabsIndex;
 
 /**
  * Drivetrain subsystem that uses Falcon 500s.
@@ -45,7 +52,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   private DifferentialDrive drive;
 
+  private DifferentialDriveOdometry odometry;
+
   private AHRS navx;
+
+  private static ShuffleboardTab driverTab = DashboardContainer.getInstance().getTab(TabsIndex.kDriver);
 
   public DrivetrainSubsystem() {
 
@@ -59,7 +70,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // Setting the sensor phase is not important as the Differential drive
     // makes the values that come from the right side flipped regardless;
     // a manual flip is located on the periodic
-
+    
+    FrontLeft.configStatorCurrentLimit(Vars.DRIVETRAIN_CURRENTLIMIT, Constants.MS_TIMEOUT);
+    BackLeft.configStatorCurrentLimit(Vars.DRIVETRAIN_CURRENTLIMIT, Constants.MS_TIMEOUT);
+    FrontRight.configStatorCurrentLimit(Vars.DRIVETRAIN_CURRENTLIMIT, Constants.MS_TIMEOUT);
+    BackRight.configStatorCurrentLimit(Vars.DRIVETRAIN_CURRENTLIMIT, Constants.MS_TIMEOUT);
+    
     LeftGroup = new SpeedControllerGroup(FrontLeft, BackLeft);
     RightGroup = new SpeedControllerGroup(FrontRight, BackRight);
     LeftGroup.setInverted(Vars.LEFT_DRIVE_INVERTED);
@@ -67,25 +83,22 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     drive = new DifferentialDrive(LeftGroup, RightGroup);
 
-    // if NavX is missing, this code will handle errors and prevent a crash
-		try {
-      navx = new AHRS(I2C.Port.kMXP);
-		} catch (Exception e) {
-			DriverStation.reportError(e.getMessage(), true);
-    }
+    // There is no try / catch because if there is no navx on the robot, the auto would break anyways
+    navx = new AHRS(I2C.Port.kMXP);
     
+    // Creates odometry class with an initial angle of the current heading of the robot (which should be 0)
+    odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getAngleDegrees()));
+    
+    driverTab.add("Drivetrain", drive).withWidget(BuiltInWidgets.kDifferentialDrive).withPosition(7, 0).withSize(3, 2);
   }
 
-  static class PERIODICio {
-
-    static double angle = 0; // degrees
-
-    static int leftEnc = 0; // native units
-    static int rightEnc = 0; // native units
-
-    static int leftEncVelocity = 0; // native units / 100ms
-    static int rightEncVelocity = 0; // native units / 100ms
-
+  /**
+   * Sets the max output of the drive.  Useful for scaling the drive to drive more slowly.
+   *
+   * @param maxOutput the maximum output to which the drive will be constrained
+   */
+  public void setMaxOutput(double maxOutput) {
+    drive.setMaxOutput(maxOutput);
   }
 
   /**
@@ -107,26 +120,83 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   /**
+   * Drive the tankdrive with raw voltage values to give to the motors.
+   * @param leftVoltage voltage given to the left side in Volts
+   * @param rightVoltage voltage given to the right side in Volts
+   */
+  public void tankdriveVoltage(double leftVoltage, double rightVoltage) {
+    // -rightVoltage to make the right side act reversed
+    LeftGroup.setVoltage(leftVoltage);
+    RightGroup.setVoltage(-rightVoltage);
+    drive.feed();
+  }
+
+  /**
+   * Drive with arcade with raw values to go forwards and rotate.
+   * 
+   * @param x Forwards speed; from -1 to 1.
+   * @param z Clockwise speed; from -1 to 1.
+   */
+  public void arcadedriveRaw(double x, double z) {
+    drive.arcadeDrive(x, z, false);
+  }
+
+  /**
+   * Drive with arcade with squared inputs for human drivers.
+   * 
+   * @param x Forwards/Backwards speed; from -1 to 1.
+   * @param z Clockwise/Counterclockwise speed; from -1 to 1.
+   */
+  public void arcadedriveSquared(double x, double z) {
+    drive.arcadeDrive(x, z, true);
+  }
+
+  /**
+   * Return estimated pose of the robot.
+   * 
+   * @return current pose (in meters)
+   */
+  public Pose2d getPose() {
+    return odometry.getPoseMeters();
+  }
+
+  /**
+   * Returns the current wheel speeds of the robot.
+   * 
+   * @return Wheel speeds (in meters/s)
+   */
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(
+      Units.inchesToMeters(getLeftVelocity()),
+      Units.inchesToMeters(getRightVelocity())
+    );
+  }
+
+  /**
    * @return the native units of the left encoder.
    */
-  public int getLeftEnc() {
-    return PERIODICio.leftEnc;
+  public double getLeftEnc() {
+    return FrontLeft.getSelectedSensorPosition();
   }
 
   /**
    * @return the native units of the right encoder.
    */
-  public int getRightEnc() {
-    return PERIODICio.rightEnc;
+  public double getRightEnc() {
+    return FrontRight.getSelectedSensorPosition() * -1;
+    // This is a * -1 because the motor is commanded to go backwards by the differential drive
+    // so the motor is still backwards even though we give the differential drive a positive command
   }
 
   /**
-   * @return The inches of the left encoder.
+   * @return The inches position of the left encoder.
    */
   public double getLeftPosition() {
     // clicks * rev/clicks * output/input = revs
     // revs * PI * diameter = distance
-    return (double) PERIODICio.leftEnc / CLICKS_PER_REV * GEARING * Math.PI * Vars.WHEEL_DIAMETER;
+    return (double) FrontLeft.getSelectedSensorPosition() / CLICKS_PER_REV * GEARING * Math.PI * Vars.WHEEL_DIAMETER;
+    // This is a * -1 because the motor is commanded to go backwards by the differential drive
+    // so the motor is still backwards even though we give the differential drive a positive command
   }
 
   /**
@@ -135,7 +205,16 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public double getRightPosition() {
     // clicks * rev/clicks * output/input = revs
     // revs * PI * diameter = distance
-    return (double) PERIODICio.rightEnc / CLICKS_PER_REV * GEARING * Math.PI * Vars.WHEEL_DIAMETER;
+    return (double) FrontRight.getSelectedSensorPosition() * -1 / CLICKS_PER_REV * GEARING * Math.PI * Vars.WHEEL_DIAMETER;
+  }
+
+  /**
+   * Gets the average distance of the two encoders.
+   *
+   * @return the average of the two encoder readings in inches
+   */
+  public double getAveragePosition() {
+    return (getLeftPosition() + getRightPosition()) / 2.0;
   }
 
   /**
@@ -144,7 +223,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public double getLeftVelocity() {
     // clicks/100ms * 10(100ms/s) * rev/clicks * output/input = rev/s
     // revs/s * PI * diameter = veloicity (in/s)
-    return (double) PERIODICio.leftEncVelocity * 10 / CLICKS_PER_REV * GEARING * Math.PI * Vars.WHEEL_DIAMETER;
+    return (double) FrontLeft.getSelectedSensorVelocity() * 10 / CLICKS_PER_REV * GEARING * Math.PI * Vars.WHEEL_DIAMETER;
   }
 
   /**
@@ -153,23 +232,34 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public double getRightVelocity() {
     // clicks/100ms * 10(100ms/s) * rev/clicks * output/input = rev/s
     // revs/s * PI * diameter = veloicity (in/s)
-    return (double) PERIODICio.rightEncVelocity * 10 / CLICKS_PER_REV * GEARING * Math.PI * Vars.WHEEL_DIAMETER;
+    return (double) FrontRight.getSelectedSensorVelocity() * -1 * 10 / CLICKS_PER_REV * GEARING * Math.PI * Vars.WHEEL_DIAMETER;
+    // This is a * -1 because the motor is commanded to go backwards by the differential drive
+    // so the motor is still backwards even though we give the differential drive a positive command
   }
 
   /**
-	 * Gets yaw angle of the robot.
+	 * Gets yaw angle of the robot. (+Clockwise)
+   * Applications that require counterclockwise as postive should take the neagtive of this value.
    * @return angle in degrees.
 	 */
 	public double getAngleDegrees() {
-		return PERIODICio.angle;
+    return navx.getAngle();
 	}
 
 	/**
-	 * Gets yaw angle of the robot.
+	 * Gets yaw angle of the robot. (+Clockwise)
    * @return angle in radians.
 	 */
 	public double getAngleRadians() {
-		return PERIODICio.angle * (Math.PI / 180.0);
+		return Units.degreesToRadians(getAngleDegrees());
+  }
+
+  /**
+   * Get the turn rate of the robot
+   * @return turn rate in degrees/s
+   */
+  public double getTurnRate() {
+    return navx.getRate();
   }
 
   /**
@@ -200,6 +290,15 @@ public class DrivetrainSubsystem extends SubsystemBase {
     resetLeftEnc();
     resetRightEnc();
   }
+
+  /**
+   * Resets the odometry of the robot
+   * @param pose of the robot when it is reset (can be a default pose to )
+   */
+  public void resetOdometry() {
+    reset();
+    odometry.resetPosition(new Pose2d(), Rotation2d.fromDegrees(getAngleDegrees()));
+  }
   
   /**
    * Zeros ALL the sensors affiliated with the drivetrain.
@@ -218,30 +317,39 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
-    if (IO.verbose) putDashboard();
-    PERIODICio.angle = navx.getAngle();
-    PERIODICio.leftEnc = FrontLeft.getSelectedSensorPosition();
-    PERIODICio.rightEnc = FrontRight.getSelectedSensorPosition() * -1;
-    // This is a * -1 because the motor is commanded to go backwards by the differential drive
-    // so the motor is still backwards even though we give the differential drive a positive command
-    PERIODICio.leftEncVelocity = FrontLeft.getSelectedSensorVelocity();
-    PERIODICio.rightEncVelocity = FrontRight.getSelectedSensorVelocity() * -1;
-    // see above
+    putDashboard();
 
+    odometry.update(
+      Rotation2d.fromDegrees(-getAngleDegrees()), // - degrees because the CCW must be + as it is on a cartesion plane
+      Units.inchesToMeters(getLeftPosition()),
+      Units.inchesToMeters(getRightPosition())
+    );
   }
 
   /**
    * Puts information about this subsystem on the dashboard.
    */
   public void putDashboard() {
-    SmartDashboard.putNumber("Navx Degrees", getAngleDegrees());
-    SmartDashboard.putNumber("Navx Radians", getAngleRadians());
-    SmartDashboard.putNumber("Left encoder", getLeftEnc());
-    SmartDashboard.putNumber("Right encoder", getRightEnc());
-    SmartDashboard.putNumber("Left position (in)", getLeftPosition());
-    SmartDashboard.putNumber("Right position (in)", getRightPosition());
-    SmartDashboard.putNumber("Left veloicity (in/s)", getLeftVelocity());
-    SmartDashboard.putNumber("Right veloicity (in/s)", getRightVelocity());
+    switch (DashboardContainer.getInstance().getVerbosity()) {
+      case 5:
+        SmartDashboard.putNumber("Drivetrain/Navx Radians", getAngleRadians());
+        SmartDashboard.putNumber("Drivetrain/Left encoder", getLeftEnc());
+        SmartDashboard.putNumber("Drivetrain/Right encoder", getRightEnc());
+        SmartDashboard.putNumber("Drivetrain/Left veloicity (in*s^-1)", getLeftVelocity());
+        SmartDashboard.putNumber("Drivetrain/Right veloicity (in*s^-1)", getRightVelocity());
+			case 4:
+        SmartDashboard.putNumber("Drivetrain/Odometry X (in)", Units.metersToInches(getPose().getTranslation().getX()));
+        SmartDashboard.putNumber("Drivetrain/Odometry Y (in)", Units.metersToInches(getPose().getTranslation().getY()));		
+			case 3:
+        SmartDashboard.putNumber("Drivetrain/Left position (in)", getLeftPosition());
+        SmartDashboard.putNumber("Drivetrain/Right position (in)", getRightPosition());
+        SmartDashboard.putNumber("Drivetrain/Average position (in)", getAveragePosition());
+      case 2:
+        SmartDashboard.putNumber("Drivetrain/Navx Degrees", getAngleDegrees());
+			case 1:
+			  break;
+			default:
+        break;
+    }
   }
 }

@@ -5,40 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
-
-import java.util.function.DoubleSupplier;
+package frc.robot.commands.feed;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.FeedSubsystem;
 
-public class TankDrive extends CommandBase {
-  DrivetrainSubsystem m_drive;
-  DoubleSupplier m_left, m_right;
-
+public class FeedBall extends CommandBase {
+  FeedSubsystem m_feed;
+  double m_feed_percent;
   /**
-   * Creates a new TankDrive.
-   * @param drive drivetrain subsystem
-   * @param left Left side value supplier
-   * @param right right side value supplier
+   * Run feed at some desired percent.
    */
-  public TankDrive(DrivetrainSubsystem drive, DoubleSupplier left, DoubleSupplier right) {
-    m_drive = drive;
-    m_left = left;
-    m_right = right;
-    addRequirements(m_drive);
+  public FeedBall(FeedSubsystem feed, double feed_percent) {
+    m_feed = feed;
+    addRequirements(m_feed);
+    m_feed_percent = feed_percent;
   }
 
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.tankdriveRaw(m_left.getAsDouble(), m_right.getAsDouble());
+    m_feed.feedAtPercent(m_feed_percent);
   }
 
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drive.stop();
+    m_feed.stop();
   }
 
+  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
