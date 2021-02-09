@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.DashboardContainer.TabsIndex;
 import frc.robot.commands.auto.AutoHarvest;
 import frc.robot.commands.auto.AutoTest;
-import frc.robot.commands.auto.AutoTesting;
 import frc.robot.commands.auto.RamseteContainer;
 import frc.robot.commands.auto.trajectories.TLine;
 
@@ -48,7 +47,7 @@ public class AutoContainer {
         RobotContainer.m_arm,
         RobotContainer.m_intake
     ));
-    chooser.addOption("AutoTesting", new AutoTest(
+    chooser.addOption("AutoTest", new AutoTest(
         RobotContainer.m_drivetrain
     ));
     // chooser.addOption("WIP! AutoSteal", new AutoSteal(

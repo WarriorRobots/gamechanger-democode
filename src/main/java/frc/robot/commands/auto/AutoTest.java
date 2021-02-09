@@ -16,7 +16,7 @@ public class AutoTest extends SequentialCommandGroup {
     ) {
         super(
             new RamseteContainer(m_drivetrain, new TLine(){
-                public double getLengthIn() {return 48;}
+                public double getLengthIn() {return 24;}
                 public double maxSpeed() {return 12;}
                 public double maxAcceleration() {return 12;}
                 public double startSpeed() {return 0;}
