@@ -20,28 +20,20 @@ public class AutoBounce extends SequentialCommandGroup {
     ) {
         super(
             new RamseteContainer(m_drivetrain, new TBounceOne(){
-                public double maxSpeed() {return 12;}
-                public double maxAcceleration() {return 12;}
                 public double startSpeed() {return 0;}
                 public double endSpeed() {return 0;}
             }).getCommand(),
             new RamseteContainer(m_drivetrain, new TBounceTwo(){
-                public double maxSpeed() {return 12;}
-                public double maxAcceleration() {return 12;}
                 public double startSpeed() {return 0;}
                 public double endSpeed() {return 12;}
             }).getCommand(),
             new RamseteContainer(m_drivetrain, new TBounceThree(){
-                public double maxSpeed() {return 12;}
-                public double maxAcceleration() {return 12;}
                 public double startSpeed() {return 12;}
                 public double endSpeed() {return 0;}
             }).getCommand(),
             new RamseteContainer(m_drivetrain, new TBounceFour(){
-              public double maxSpeed() {return 12;}
-              public double maxAcceleration() {return 12;}
-              public double startSpeed() {return 0;}
-              public double endSpeed() {return 0;}
+                public double startSpeed() {return 0;}
+                public double endSpeed() {return 0;}
             }).getCommandAndStop()
         );
     }
