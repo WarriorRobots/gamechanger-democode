@@ -17,11 +17,6 @@ import edu.wpi.first.wpilibj.util.Units;
  */
 public class TBounceOne extends TBase {
 
-  @Override
-  public double maxSpeed() {
-      return 12; 
-  }
-
   public TBounceOne() {
 
   }
