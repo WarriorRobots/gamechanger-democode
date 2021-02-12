@@ -13,8 +13,7 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
 
 /**
- * A 90 degree turn in the shape of a quarter circle.
- * Start at the origin and travel left or right around a 5 foot radius circle.
+ *
  */
 public class TBounceThree extends TBase {
 

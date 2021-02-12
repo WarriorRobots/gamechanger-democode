@@ -17,24 +17,24 @@ public class AutoTest extends SequentialCommandGroup {
                     DrivetrainSubsystem m_drivetrain
     ) {
         super(
-            new RamseteContainer(m_drivetrain, new TBounceOne(){
-                public double maxSpeed() {return 12;}
-                public double maxAcceleration() {return 12;}
-                public double startSpeed() {return 0;}
-                public double endSpeed() {return 0;}
-              }).getCommand(),
-              new RamseteContainer(m_drivetrain, new TBounceTwo(){
-                public double maxSpeed() {return 12;}
-                public double maxAcceleration() {return 12;}
-                public double startSpeed() {return 0;}
-                public double endSpeed() {return 0;}
-              }).getCommand(),
-              new RamseteContainer(m_drivetrain, new TBounceThree(){
-                public double maxSpeed() {return 12;}
-                public double maxAcceleration() {return 12;}
-                public double startSpeed() {return 0;}
-                public double endSpeed() {return 0;}
-              }).getCommandAndStop()
+            // new RamseteContainer(m_drivetrain, new TBounceOne(){
+            //     public double maxSpeed() {return 12;}
+            //     public double maxAcceleration() {return 12;}
+            //     public double startSpeed() {return 0;}
+            //     public double endSpeed() {return 0;}
+            //   }).getCommand(),
+            //   new RamseteContainer(m_drivetrain, new TBounceTwo(){
+            //     public double maxSpeed() {return 12;}
+            //     public double maxAcceleration() {return 12;}
+            //     public double startSpeed() {return 0;}
+            //     public double endSpeed() {return 0;}
+            //   }).getCommand(),
+            //   new RamseteContainer(m_drivetrain, new TBounceThree(){
+            //     public double maxSpeed() {return 12;}
+            //     public double maxAcceleration() {return 12;}
+            //     public double startSpeed() {return 0;}
+            //     public double endSpeed() {return 0;}
+            //   }).getCommandAndStop()
         );
     }
 }
