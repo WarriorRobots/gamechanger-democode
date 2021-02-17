@@ -15,29 +15,28 @@ import edu.wpi.first.wpilibj.util.Units;
 /**
  *
  */
-public class TBounceThree extends TBase {
+public class TBounceFive extends TBase {
 
-  public TBounceThree() {
+  public TBounceFive() {
 
-  }
-
-  @Override
-  public boolean isReversed() {
-      return true; //TBounceThree segment is driven reversed
   }
 
   @Override
   void build() {
     /*
     x & y are flipped so the translations are y, x
-      x   |y   |angle
+      x  |y  |angle
     S    0,   0,   0
-    F  -30, -30,
-    G -120, -30,  90
+    H    0,  90
+    I   30, 120
+    J   60, 120
+    K   90,  90
+    L   90,   0, 180
     */
-    start = new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), Rotation2d.fromDegrees(0));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(-30), Units.inchesToMeters(-30)));
-    end = new Pose2d(Units.inchesToMeters(-30), Units.inchesToMeters(-130), Rotation2d.fromDegrees(90)); //Y value shifted -10 to compensate for encoder losses
+    start = new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), Rotation2d.fromDegrees(0)); //Starts at I
+    Waypoints.add(new Translation2d(Units.inchesToMeters(30), Units.inchesToMeters(0)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(60), Units.inchesToMeters(30)));
+    end = new Pose2d(Units.inchesToMeters(60), Units.inchesToMeters(120), Rotation2d.fromDegrees(90));
   }
 
 }

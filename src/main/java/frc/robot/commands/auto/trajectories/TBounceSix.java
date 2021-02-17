@@ -15,15 +15,15 @@ import edu.wpi.first.wpilibj.util.Units;
 /**
  *
  */
-public class TBounceThree extends TBase {
+public class TBounceSix extends TBase {
 
-  public TBounceThree() {
+  public TBounceSix() {
 
   }
 
   @Override
   public boolean isReversed() {
-      return true; //TBounceThree segment is driven reversed
+      return true; //TBounceSix segment is driven reversed
   }
 
   @Override
@@ -31,13 +31,15 @@ public class TBounceThree extends TBase {
     /*
     x & y are flipped so the translations are y, x
       x   |y   |angle
-    S    0,   0,   0
-    F  -30, -30,
-    G -120, -30,  90
+    S    0,    0,   0
+    M    0,  -15,
+    N  -30,  -30,
+    O  -60,  -30,  90
     */
     start = new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), Rotation2d.fromDegrees(0));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(-15), Units.inchesToMeters(0)));
     Waypoints.add(new Translation2d(Units.inchesToMeters(-30), Units.inchesToMeters(-30)));
-    end = new Pose2d(Units.inchesToMeters(-30), Units.inchesToMeters(-130), Rotation2d.fromDegrees(90)); //Y value shifted -10 to compensate for encoder losses
+    end = new Pose2d(Units.inchesToMeters(-30), Units.inchesToMeters(-60), Rotation2d.fromDegrees(90)); //Y value shifted -10 to compensate for encoder losses
   }
 
 }

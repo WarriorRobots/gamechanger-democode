@@ -6,8 +6,10 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.commands.auto.trajectories.TBounceFive;
 import frc.robot.commands.auto.trajectories.TBounceFour;
 import frc.robot.commands.auto.trajectories.TBounceOne;
+import frc.robot.commands.auto.trajectories.TBounceSix;
 import frc.robot.commands.auto.trajectories.TBounceThree;
 import frc.robot.commands.auto.trajectories.TBounceTwo;
 import frc.robot.commands.auto.trajectories.TLine;
@@ -34,7 +36,15 @@ public class AutoBounce extends SequentialCommandGroup {
             new RamseteContainer(m_drivetrain, new TBounceFour(){
                 public double startSpeed() {return 0;}
                 public double endSpeed() {return 0;}
-            }).getCommandAndStop()
+            }).getCommand(),
+            new RamseteContainer(m_drivetrain, new TBounceFive(){
+                public double startSpeed() {return 0;}
+                public double endSpeed() {return 0;}
+            }).getCommand(),
+            new RamseteContainer(m_drivetrain, new TBounceSix(){
+                public double startSpeed() {return 0;}
+                public double endSpeed() {return 0;}
+            }).getCommand()
         );
     }
 }
