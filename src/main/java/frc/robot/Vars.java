@@ -121,8 +121,8 @@ public class Vars {
   
   public static final double DRIVE_MAX_M_PER_S = 189.72441; // in/s
   public static final double DRIVE_MAX_M_PER_S_SQUARED = 1743; // in/s^2
-  public static final double AUTO_MAX_M_PER_S = 84; // in/s  118
-  public static final double AUTO_MAX_M_PER_S_SQUARED = 67; // in/s^2  67
+  public static final double AUTO_MAX_M_PER_S = 84; // in/s  max 118
+  public static final double AUTO_MAX_M_PER_S_SQUARED = 67; // in/s^2  max 67
 
   // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
   public static final double RAMSETE_B = 2;

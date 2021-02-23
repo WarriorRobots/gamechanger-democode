@@ -37,15 +37,28 @@ public class TBarrel extends TBase {
     H  60, 210,
     I  30, 180,
     J   0, 210,
-    K  60, 270,
-    L  30, 300,
+    k -30, 240,
+    K -60, 270,
+    L -30, 300,
     M   0, 270,
     N   0,   0, 180
     */
     start = new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), Rotation2d.fromDegrees(0));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(30), Units.inchesToMeters(0)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(60), Units.inchesToMeters(30)));
-    end = new Pose2d(Units.inchesToMeters(60), Units.inchesToMeters(60), Rotation2d.fromDegrees(90));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(0)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(-30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(-60)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(-30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(0)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(0)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(240), Units.inchesToMeters(30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(70)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(0)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(240), Units.inchesToMeters(-30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(270), Units.inchesToMeters(-60)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(300), Units.inchesToMeters(-30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(270), Units.inchesToMeters(5)));
+    end = new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(15), Rotation2d.fromDegrees(180));
   }
 
 }

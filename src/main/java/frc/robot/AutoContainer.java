@@ -16,6 +16,8 @@ import frc.robot.DashboardContainer.TabsIndex;
 import frc.robot.commands.auto.AutoHarvest;
 import frc.robot.commands.auto.AutoBounce;
 import frc.robot.commands.auto.RamseteContainer;
+import frc.robot.commands.auto.AutoBarrel;
+import frc.robot.commands.auto.AutoSlalom;
 import frc.robot.commands.auto.trajectories.TLine;
 
 /**
@@ -50,7 +52,10 @@ public class AutoContainer {
     chooser.addOption("AutoBounce", new AutoBounce(
         RobotContainer.m_drivetrain
     ));
-    chooser.addOption("Bob", new InstantCommand());
+    chooser.addOption("AutoBarrel", new AutoBarrel(
+        RobotContainer.m_drivetrain
+    ));
+    chooser.addOption("Bob", new InstantCommand()); //He does nothing
     // chooser.addOption("WIP! AutoSteal", new AutoSteal(
     //     RobotContainer.m_drivetrain,
     //     RobotContainer.m_shooter,
