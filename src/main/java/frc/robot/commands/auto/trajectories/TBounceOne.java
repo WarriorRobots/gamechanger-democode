@@ -33,8 +33,8 @@ public class TBounceOne extends TBase {
     */
     start = new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), Rotation2d.fromDegrees(0));
     Waypoints.add(new Translation2d(Units.inchesToMeters(30), Units.inchesToMeters(0)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(30), Units.inchesToMeters(-30)));
-    end = new Pose2d(Units.inchesToMeters(60), Units.inchesToMeters(-60), Rotation2d.fromDegrees(90));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(30), Units.inchesToMeters(30)));
+    end = new Pose2d(Units.inchesToMeters(60), Units.inchesToMeters(60), Rotation2d.fromDegrees(90));
   }
 
 }

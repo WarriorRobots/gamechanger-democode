@@ -38,9 +38,9 @@ public class TBounceTwo extends TBase {
     G   0,  90, 180
     */
     start = new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), Rotation2d.fromDegrees(0));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(30), Units.inchesToMeters(-90)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(60), Units.inchesToMeters(-120)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(-90)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(30), Units.inchesToMeters(90)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(60), Units.inchesToMeters(120)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(90)));
     Waypoints.add(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(0)));
     end = new Pose2d(Units.inchesToMeters(90), Units.inchesToMeters(0), Rotation2d.fromDegrees(180));
   }

@@ -35,10 +35,10 @@ public class TBounceThree extends TBase {
     */
     start = new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), Rotation2d.fromDegrees(0));
     Waypoints.add(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(0)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(-30)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(-60)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(-90)));
-    end = new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(-90), Rotation2d.fromDegrees(180));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(60)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(90)));
+    end = new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(90), Rotation2d.fromDegrees(180));
   }
 
 }
