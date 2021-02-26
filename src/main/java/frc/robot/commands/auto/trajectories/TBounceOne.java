@@ -25,16 +25,16 @@ public class TBounceOne extends TBase {
   void build() {
     /*
     x & y are flipped so the translations are y, x
-      x |y |angle
-    S  0, 0, 0
-    A  0,30, 0
-    B 30,60,90
-    C 60,60,90 
+        x|   y|angle
+    S   0,   0,   0
+    A   0,  30,
+    B -30,  30,
+    C -60,  60,  90
     */
     start = new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), Rotation2d.fromDegrees(0));
     Waypoints.add(new Translation2d(Units.inchesToMeters(30), Units.inchesToMeters(0)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(60), Units.inchesToMeters(30)));
-    end = new Pose2d(Units.inchesToMeters(60), Units.inchesToMeters(60), Rotation2d.fromDegrees(90));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(30), Units.inchesToMeters(-30)));
+    end = new Pose2d(Units.inchesToMeters(60), Units.inchesToMeters(-60), Rotation2d.fromDegrees(90));
   }
 
 }

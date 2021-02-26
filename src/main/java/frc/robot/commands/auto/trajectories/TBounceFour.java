@@ -22,20 +22,24 @@ public class TBounceFour extends TBase {
   }
 
   @Override
+  public boolean isReversed() {
+      return true; //TBounceFour segment is driven reversed
+  }
+
+  @Override
   void build() {
     /*
     x & y are flipped so the translations are y, x
-      x  |y  |angle
-    S    0,   0,   0
-    H    0,  90
-    I   30, 120
-    J   60, 120
-    K   90,  90
-    L   90,   0, 180
+        x|   y|angle
+    S   0,   0,   0
+    M   0, -30,
+    N  30, -60,
+    O  60, -60,  90
     */
     start = new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), Rotation2d.fromDegrees(0));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(90), Units.inchesToMeters(0)));
-    end = new Pose2d(Units.inchesToMeters(120), Units.inchesToMeters(30), Rotation2d.fromDegrees(90)); //Ends at I
+    Waypoints.add(new Translation2d(Units.inchesToMeters(-30), Units.inchesToMeters(0)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(-60), Units.inchesToMeters(30)));
+    end = new Pose2d(Units.inchesToMeters(-60), Units.inchesToMeters(60), Rotation2d.fromDegrees(90));
   }
 
 }
