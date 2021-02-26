@@ -11,7 +11,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 /**
  * Auto made to run the Slalom Path
  * List of trajectories used
- * TSlalom: E1 E2 D3 C4 C8 D9 E10 D11 C10 E8 E4 C2 C1
+ * TSlalom: E1 E2 C4 C8 E10 D11 C10 E8 E4 C2 C1
  * 
  */
 public class AutoSlalom extends SequentialCommandGroup {
