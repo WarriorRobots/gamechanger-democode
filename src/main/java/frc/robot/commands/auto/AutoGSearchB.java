@@ -29,17 +29,21 @@ public class AutoGSearchB extends SequentialCommandGroup {
                         HopperSubsystem hopper,
                         ArmSubsystem arm,
                         IntakeSubsystem intake
-                        ) {
-    super(
-        //preps the arm
-        new ArmZero(arm),
-        new ArmToPosition(arm, Vars.ARM_OUT),
+                        ) 
+    {
+        super(
+            //preps the arm
+            new ArmZero(arm),
+            new ArmToPosition(arm, Vars.ARM_OUT-5),
 
-        //runs the path and intakes the balls
-        new ParallelDeadlineGroup(
-            new RamseteContainer(m_drivetrain, new TGSearchB()).getCommand(),
-            new IntakePower(intake, Vars.INTAKE_PERCENT)
-            )
+            //runs the path and intakes the balls
+            new ParallelDeadlineGroup(
+                new RamseteContainer(m_drivetrain, new TGSearchB()).getCommand(),
+                new IntakePower(intake, Vars.INTAKE_PERCENT-.1)
+            ),
+
+            //
+            new ArmToPosition(arm, 2)
         );
     }
 }
