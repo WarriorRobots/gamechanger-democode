@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.util.Units;
  */
 public class TGSearchB extends TBase {
 
+  private int error=10;
+
   public TGSearchB() {
 
   }
@@ -25,25 +27,25 @@ public class TGSearchB extends TBase {
   void build() {
     /*
     x & y are flipped so the translations are y, x
-    subtracted 15 from y to get the front of the robot
+    subtract 15 from y to get the front of the robot
         x|   y|angle
     S   0,   0,   0
-    A  30,  45,
-    B -30, 115,
-    C -30, 135,
-    D  30, 165,
-    E  30, 195,
-    F -30, 255, 
-    N   0, 285,   0
+    A  30,  60,
+    B -30, 120,
+    C -30, 150,
+    D  30, 180,
+    E  30, 210,
+    F -30, 270, 
+    N   0, 300,   0
     */
     start = new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), Rotation2d.fromDegrees(0));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(45), Units.inchesToMeters(30)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(105), Units.inchesToMeters(-30)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(135), Units.inchesToMeters(-30)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(165), Units.inchesToMeters(30)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(195), Units.inchesToMeters(30)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(255), Units.inchesToMeters(-30)));
-    end = new Pose2d(Units.inchesToMeters(285), Units.inchesToMeters(0), Rotation2d.fromDegrees(0));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(60-error), Units.inchesToMeters(30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(120-error), Units.inchesToMeters(-30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(150-error), Units.inchesToMeters(-30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(180-error), Units.inchesToMeters(30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(210-error), Units.inchesToMeters(30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(270-error), Units.inchesToMeters(-30)));
+    end = new Pose2d(Units.inchesToMeters(300-error), Units.inchesToMeters(0), Rotation2d.fromDegrees(0));
   }
 
 }
