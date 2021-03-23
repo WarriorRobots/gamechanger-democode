@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj.util.Units;
 /**
  *
  */
-public class TGSearchB extends TBase {
+public class TGSearchA extends TBase {
 
-  public TGSearchB() {
+  public TGSearchA() {
 
   }
 
@@ -27,21 +27,21 @@ public class TGSearchB extends TBase {
     x & y are flipped so the translations are y, x
         x|   y|angle
     S   0,   0,   0
-    A  30,  60,
+    A   0,  60,
     B -30, 120,
-    C -30, 150,
-    D  30, 180,
-    E  30, 210,
-    F -30, 270, 
+    C -60, 150,
+    D  60, 150,
+    E  30, 180,
+    F   0, 240, 
     N   0, 300,   0
     */
     start = new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), Rotation2d.fromDegrees(0));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(60), Units.inchesToMeters(30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(60), Units.inchesToMeters(0)));
     Waypoints.add(new Translation2d(Units.inchesToMeters(120), Units.inchesToMeters(-30)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(-30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(-60)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(150), Units.inchesToMeters(60)));
     Waypoints.add(new Translation2d(Units.inchesToMeters(180), Units.inchesToMeters(30)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(210), Units.inchesToMeters(30)));
-    Waypoints.add(new Translation2d(Units.inchesToMeters(270), Units.inchesToMeters(-30)));
+    Waypoints.add(new Translation2d(Units.inchesToMeters(240), Units.inchesToMeters(0)));
     end = new Pose2d(Units.inchesToMeters(300), Units.inchesToMeters(0), Rotation2d.fromDegrees(0));
   }
 
