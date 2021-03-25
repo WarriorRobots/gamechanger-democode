@@ -17,6 +17,9 @@ import frc.robot.Vars;
 import frc.robot.commands.arm.ArmToPosition;
 import frc.robot.commands.arm.ArmZero;
 import frc.robot.commands.auto.trajectories.TGSearchB;
+import frc.robot.commands.auto.trajectories.TGSearchBOne;
+import frc.robot.commands.auto.trajectories.TGSearchBThree;
+import frc.robot.commands.auto.trajectories.TGSearchBTwo;
 import frc.robot.commands.intake.IntakePower;
 
 /** 
@@ -42,7 +45,11 @@ public class AutoGSearchB extends SequentialCommandGroup {
 
             //runs the path and intakes the balls
             new ParallelDeadlineGroup(
-                new RamseteContainer(m_drivetrain, new TGSearchB()).getCommand(),
+                new SequentialCommandGroup(
+                    new RamseteContainer(m_drivetrain, new TGSearchBOne()).getCommand(),
+                    new RamseteContainer(m_drivetrain, new TGSearchBTwo()).getCommand(),
+                    new RamseteContainer(m_drivetrain, new TGSearchBThree()).getCommandAndStop()
+                ),
                 new IntakePower(intake, Vars.INTAKE_PERCENT-.1)
             ),
 
