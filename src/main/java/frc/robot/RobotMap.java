@@ -17,16 +17,11 @@ public class RobotMap {
   // public static final int ID_HOOD = 8;
   public static final int ID_TURRET = 9;
   public static final int ID_FEED = 10;
-  public static final int ID_CLIMB = 11;
+  // public static final int ID_CLIMB = 11;
   public static final int ID_INTAKE = 12;
   public static final int ID_SHOOTER_RIGHT = 13;
   public static final int ID_FRONTLEFT = 14;
   public static final int ID_BACKLEFT = 15;
-  
-  // Pneumatics
-  public static final int ID_PCM = 0;
-  public static final int ID_BRAKES_F = 4;
-  public static final int ID_BRAKES_B = 5;
 
   // DIO
   public static final int ID_FEED_INFRARED = 0;
