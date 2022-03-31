@@ -38,55 +38,55 @@ public class AutoContainer {
   private void init() {
     
     chooser.addOption("None", new InstantCommand());
-    chooser.addOption("Forwards 48\"",
-      new RamseteContainer(RobotContainer.m_drivetrain, new TLine(){public double getLengthIn() {return 48;}}).getCommandAndStop()
-    );
-    chooser.addOption("AutoHarvest", new AutoHarvest(
-        RobotContainer.m_drivetrain,
-        RobotContainer.m_shooter,
-        RobotContainer.m_turret,
-        RobotContainer.m_camera,
-        RobotContainer.m_feed,
-        RobotContainer.m_hopper,
-        RobotContainer.m_arm,
-        RobotContainer.m_intake
-    ));
-    chooser.addOption("AutoBounce", new AutoBounce(
-        RobotContainer.m_drivetrain
-    ));
-    chooser.addOption("AutoBarrel", new AutoBarrel(
-        RobotContainer.m_drivetrain
-    ));
-    chooser.addOption("AutoSlalom", new AutoSlalom(
-        RobotContainer.m_drivetrain
-    ));
-    chooser.addOption("AutoGSearchB", new AutoGSearchB(
-        RobotContainer.m_drivetrain,
-        RobotContainer.m_feed,
-        RobotContainer.m_hopper,
-        RobotContainer.m_arm,
-        RobotContainer.m_intake
-    ));
-    chooser.addOption("AutoGSearchA", new AutoGSearchA(
-      RobotContainer.m_drivetrain,
-      RobotContainer.m_feed,
-      RobotContainer.m_hopper,
-      RobotContainer.m_arm,
-      RobotContainer.m_intake
-  ));
-    chooser.addOption("Bob", new InstantCommand()); //He does nothing
-    // chooser.addOption("WIP! AutoSteal", new AutoSteal(
-    //     RobotContainer.m_drivetrain,
-    //     RobotContainer.m_shooter,
-    //     RobotContainer.m_turret,
-    //     RobotContainer.m_camera,
-    //     RobotContainer.m_feed,
-    //     RobotContainer.m_hopper,
-    //     RobotContainer.m_arm,
-    //     RobotContainer.m_intake
-    // ));
+  //   chooser.addOption("Forwards 48\"",
+  //     new RamseteContainer(RobotContainer.m_drivetrain, new TLine(){public double getLengthIn() {return 48;}}).getCommandAndStop()
+  //   );
+  //   chooser.addOption("AutoHarvest", new AutoHarvest(
+  //       RobotContainer.m_drivetrain,
+  //       RobotContainer.m_shooter,
+  //       RobotContainer.m_turret,
+  //       RobotContainer.m_camera,
+  //       RobotContainer.m_feed,
+  //       RobotContainer.m_hopper,
+  //       RobotContainer.m_arm,
+  //       RobotContainer.m_intake
+  //   ));
+  //   chooser.addOption("AutoBounce", new AutoBounce(
+  //       RobotContainer.m_drivetrain
+  //   ));
+  //   chooser.addOption("AutoBarrel", new AutoBarrel(
+  //       RobotContainer.m_drivetrain
+  //   ));
+  //   chooser.addOption("AutoSlalom", new AutoSlalom(
+  //       RobotContainer.m_drivetrain
+  //   ));
+  //   chooser.addOption("AutoGSearchB", new AutoGSearchB(
+  //       RobotContainer.m_drivetrain,
+  //       RobotContainer.m_feed,
+  //       RobotContainer.m_hopper,
+  //       RobotContainer.m_arm,
+  //       RobotContainer.m_intake
+  //   ));
+  //   chooser.addOption("AutoGSearchA", new AutoGSearchA(
+  //     RobotContainer.m_drivetrain,
+  //     RobotContainer.m_feed,
+  //     RobotContainer.m_hopper,
+  //     RobotContainer.m_arm,
+  //     RobotContainer.m_intake
+  // ));
+  //   chooser.addOption("Bob", new InstantCommand()); //He does nothing
+  //   // chooser.addOption("WIP! AutoSteal", new AutoSteal(
+  //   //     RobotContainer.m_drivetrain,
+  //   //     RobotContainer.m_shooter,
+  //   //     RobotContainer.m_turret,
+  //   //     RobotContainer.m_camera,
+  //   //     RobotContainer.m_feed,
+  //   //     RobotContainer.m_hopper,
+  //   //     RobotContainer.m_arm,
+  //   //     RobotContainer.m_intake
+  //   // ));
 
-    autoTab.add("Auto Selector", chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(3,0).withSize(2, 1);
+  //   autoTab.add("Auto Selector", chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(3,0).withSize(2, 1);
   
   }
 
