@@ -150,7 +150,7 @@ public class ArmSubsystem extends SubsystemBase {
   
   @Override
   public void periodic() {
-    putDashboard();
+    // putDashboard();
     
     // when the arm is at it's phyical zero, it should be at it's logical zero as well
     if (hallEffect()) {

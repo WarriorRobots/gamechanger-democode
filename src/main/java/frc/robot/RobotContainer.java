@@ -53,32 +53,32 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class RobotContainer {
   
   // subsystems
-  // protected static final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
-  // protected static final ShooterSubsystem m_shooter = new ShooterSubsystem();
-  // protected static final TurretSubsystem m_turret = new TurretSubsystem();
-  // protected static final CameraSubsystem m_camera = new CameraSubsystem();
-  // protected static final FeedSubsystem m_feed = new FeedSubsystem();
-  // protected static final HopperSubsystem m_hopper = new HopperSubsystem();
-  // protected static final ArmSubsystem m_arm =  new ArmSubsystem();
-  // protected static final IntakeSubsystem m_intake = new IntakeSubsystem();
+  protected static final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
+  protected static final ShooterSubsystem m_shooter = new ShooterSubsystem();
+  protected static final TurretSubsystem m_turret = new TurretSubsystem();
+  protected static final CameraSubsystem m_camera = new CameraSubsystem();
+  protected static final FeedSubsystem m_feed = new FeedSubsystem();
+  protected static final HopperSubsystem m_hopper = new HopperSubsystem();
+  protected static final ArmSubsystem m_arm =  new ArmSubsystem();
+  protected static final IntakeSubsystem m_intake = new IntakeSubsystem();
 
   // // commands
-  // private final TankDrive m_tankDrive = new TankDrive(m_drivetrain, ()->IO.getLeftY(), ()->IO.getRightY());
-  // private final TankStraight m_tankDriveStraight = new TankStraight(m_drivetrain, ()->IO.getLeftY(), ()->IO.getRightY());
-  // private final TankStation m_tankStation = new TankStation(m_drivetrain, m_turret, m_camera, ()->IO.getLeftY(), ()->IO.getRightY());
+  private final TankDrive m_tankDrive = new TankDrive(m_drivetrain, ()->IO.getLeftY(), ()->IO.getRightY());
+  private final TankStraight m_tankDriveStraight = new TankStraight(m_drivetrain, ()->IO.getLeftY(), ()->IO.getRightY());
+  private final TankStation m_tankStation = new TankStation(m_drivetrain, m_turret, m_camera, ()->IO.getLeftY(), ()->IO.getRightY());
   
   // // private final ShooterRPM m_shooterRPM = new ShooterRPM(m_shooter);
-  // private final SequentialCommandGroup m_shooterSequence = new SequentialCommandGroup(
-  //   new ShooterPrep(m_hopper, m_feed),
-  //   new ShooterHopper(m_shooter, m_intake, m_hopper, m_feed){public void end(boolean interrupted){/* This is empty is to not stop the motor from rev-ing*/}}
-  // ){public void end(boolean interrupted){m_intake.stop();m_hopper.stop();m_feed.stop();}}; // This is to stop the hopper and feed if the command is stopped however not stop the shooter, that is handled by UnRev
+  private final SequentialCommandGroup m_shooterSequence = new SequentialCommandGroup(
+    new ShooterPrep(m_hopper, m_feed),
+    new ShooterHopper(m_shooter, m_intake, m_hopper, m_feed){public void end(boolean interrupted){/* This is empty is to not stop the motor from rev-ing*/}}
+  ){public void end(boolean interrupted){m_intake.stop();m_hopper.stop();m_feed.stop();}}; // This is to stop the hopper and feed if the command is stopped however not stop the shooter, that is handled by UnRev
   // /** Clears the shooter and runs the shooter at an rpm for the shooter to then be fed */
   // private final SequentialCommandGroup m_revTrigger = new SequentialCommandGroup(
   //   new ShooterPrep(m_hopper, m_feed),
   //   new ShooterRPM(m_shooter){public void end(boolean interrupted){/* This is empty is to not stop the motor from rev-ing*/}}
   // );
   // /** Stop the shooter */
-  // private final InstantCommand m_shooterUnRev = new InstantCommand(() -> m_shooter.stop(), m_shooter);
+  private final InstantCommand m_shooterUnRev = new InstantCommand(() -> m_shooter.stop(), m_shooter);
   // private final ShooterCleaning m_shooterCleaning = new ShooterCleaning(m_shooter);
 
   // private final TurretRotate m_turretRotate = new TurretRotate(m_turret, ()->IO.getXBoxRightX());
@@ -93,7 +93,7 @@ public class RobotContainer {
   // private final HopperGroupPower m_hoppergroup = new HopperGroupPower(m_hopper, m_feed, Vars.HOPPER_WALL_PERCENT, Vars.HOPPER_FLOOR_PERCENT, Vars.FEED_PERCENT);
   // private final HopperGroupPower m_hoppergroup_Back = new HopperGroupPower(m_hopper, m_feed, Vars.HOPPER_WALL_PERCENT_BACK, Vars.HOPPER_FLOOR_PERCENT_BACK, Vars.FEED_PERCENT_BACK);
 
-  // private final ArmLinear m_armLinear = new ArmLinear(m_arm, ()->IO.getXBoxLeftY());
+  private final ArmLinear m_armLinear = new ArmLinear(m_arm, ()->IO.getXBoxLeftY());
   // // private final ArmUp m_armUp = new ArmUp(m_arm);
 
   // // private final IntakePower m_intakeBall = new IntakePower(m_intake, Vars.INTAKE_PERCENT);
@@ -103,10 +103,10 @@ public class RobotContainer {
   // private final ArmToPosition m_armIn = new ArmToPosition(m_arm, Vars.ARM_IN);
   // private final ArmToPosition m_armPlayer = new ArmToPosition(m_arm, Vars.ARM_PLAYER);
   // // private final ArmHoldPosition m_armOut = new ArmHoldPosition(m_arm, Vars.ARM_OUT); // note this is a hold button
-  // private final ParallelCommandGroup m_pickupSequence = new ParallelCommandGroup(
-  //   new ArmHoldPosition(m_arm, Vars.ARM_OUT),
-  //   new IntakeHopper(m_intake, m_hopper, m_feed)
-  // );
+  private final ParallelCommandGroup m_pickupSequence = new ParallelCommandGroup(
+    new ArmHoldPosition(m_arm, Vars.ARM_OUT),
+    new IntakeHopper(m_intake, m_hopper, m_feed)
+  );
   // private final ArmZero m_armZero = new ArmZero(m_arm);
 
 
@@ -116,7 +116,7 @@ public class RobotContainer {
   public RobotContainer() {
     configureButtonBindings();
 
-    // CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_tankDrive);
+    CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_tankDrive);
   }
 
   /**
@@ -127,13 +127,12 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     
-    // IO.leftJoystick_1.whileHeld(m_tankStation);
-    // IO.leftJoystick_4.whileHeld(m_tankDriveStraight);
+    IO.leftJoystick_1.whileHeld(m_tankStation);
+    IO.leftJoystick_4.whileHeld(m_tankDriveStraight);
     // IO.rightJoystick_1.whileHeld(m_turretAim).whileActiveOnce(m_revTrigger, true);
-    // IO.rightJoystick_2.whileHeld(m_shooterSequence);
-    // IO.rightJoystick_1.negate().and(IO.rightJoystick_2.negate()).whileActiveOnce(m_shooterUnRev); // This is for if the driver revs the shooter but does not shoot so the shooter stops
-    // IO.rightJoystick_3.whileHeld(m_pickupSequence);
-    // // IO.rightJoystick_6.whenPressed(m_climbDown);
+    IO.rightJoystick_2.whileHeld(m_shooterSequence);
+    IO.rightJoystick_1.negate().and(IO.rightJoystick_2.negate()).whileActiveOnce(m_shooterUnRev); // This is for if the driver revs the shooter but does not shoot so the shooter stops
+    IO.rightJoystick_3.whileHeld(m_pickupSequence);
     // IO.xbox_B.whenPressed(m_armPlayer);
     // IO.xbox_Y.whenPressed(m_armIn);
     // IO.xbox_LB.whileHeld(m_intakeBall_Back);
@@ -146,7 +145,7 @@ public class RobotContainer {
     // IO.xbox_R_DOWN.and(IO.xbox_R_JOYSTICK.negate()).whileActiveOnce(m_hoppergroup_Back, true); // when the stick is not pressed and pushed down
     
     // // debug
-    // IO.xbox_L_JOYSTICK.whileHeld(m_armLinear);
+    IO.xbox_L_JOYSTICK.whileHeld(m_armLinear);
     // IO.xbox_R_JOYSTICK.whileHeld(m_turretRotate);
     // IO.leftJoystick_7.whenPressed(m_armZero);
     // IO.leftJoystick_8.whileHeld(m_shooterCleaning);

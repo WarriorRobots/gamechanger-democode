@@ -173,7 +173,7 @@ public class TurretSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    putDashboard();
+    // putDashboard();
     // if (isCentered()) {
     //   resetEncoder();
     // }

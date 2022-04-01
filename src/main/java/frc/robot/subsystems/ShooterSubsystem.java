@@ -150,7 +150,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    putDashboard();
+    // putDashboard();
   }
 
   public void putDashboard() {

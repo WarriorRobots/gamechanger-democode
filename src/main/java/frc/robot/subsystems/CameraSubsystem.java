@@ -168,7 +168,7 @@ public class CameraSubsystem extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		putDashboard();
+		// putDashboard();
 	}
 
 	public void putDashboard() {
